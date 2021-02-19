@@ -3,7 +3,8 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.Systems
+
+namespace ECSFPS.ECS.Systems
 {
     public class InputSystem : ComponentSystem
     {
@@ -15,7 +16,8 @@ namespace Assets.Scripts.ECS.Systems
                 {
                     MovementValue = new float3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical")),
                     JumpValue = Input.GetButton("Jump"),
-                    FireValue = Input.GetButton("Fire1")
+                    FireValue = Input.GetButton("Fire1"),
+                    deltaTime = Time.DeltaTime
                 };
             });
         }

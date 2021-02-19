@@ -8,5 +8,6 @@ namespace ECSFPS.ECS.Components
         public float3 MovementValue;
         public bool JumpValue;
         public bool FireValue;
+        public float deltaTime;
     }
 }
