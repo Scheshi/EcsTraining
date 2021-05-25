@@ -17,8 +17,13 @@ namespace ECSFPS.ECS.Systems
                     MovementValue = new float3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical")),
                     JumpValue = Input.GetButton("Jump"),
                     FireValue = Input.GetButton("Fire1"),
-                    deltaTime = Time.DeltaTime
+                    XMousePosition = Input.GetAxis("Mouse X"),
+                    YMousePosition = Input.GetAxis("Mouse Y"),
+                    deltaTime = Time.DeltaTime,
+                    XRot = input.XRot,
+                    YRot = input.YRot
                 };
+                input.XRot += Input.GetAxis("Mouse X") * 90 * Time.DeltaTime;
             });
         }
     }

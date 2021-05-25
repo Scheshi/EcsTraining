@@ -3,6 +3,7 @@
 
 namespace ECSFPS.ECS.Components
 {
+    [GenerateAuthoringComponent]
     public struct FreezeXZRotation : IComponentData
     {
     }
