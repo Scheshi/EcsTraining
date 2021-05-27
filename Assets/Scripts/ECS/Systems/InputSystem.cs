@@ -23,7 +23,6 @@ namespace ECSFPS.ECS.Systems
                     XRot = input.XRot,
                     YRot = input.YRot
                 };
-                input.XRot += Input.GetAxis("Mouse X") * 90 * Time.DeltaTime;
             });
         }
     }

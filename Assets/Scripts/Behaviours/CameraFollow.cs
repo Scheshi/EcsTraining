@@ -27,7 +27,7 @@ namespace Assets.Scripts.Behaviours
             Cursor.visible = false;
             _xRot = transform.rotation.x;
             _yRot = transform.rotation.y;
-
+            
         }
 
         private void Update()
@@ -42,7 +42,8 @@ namespace Assets.Scripts.Behaviours
             if (followEntityTranslation.Equals(default)) return;
             var rotation = _manager.GetComponentData<Rotation>(_entity).Value;
             transform.position = followEntityTranslation.Value + _offset;
-            transform.rotation = Quaternion.Euler(-_yRot, _xRot, 0.0f);
+            transform.LookAt(followEntityTranslation.Value);
+            //transform.rotation = Quaternion.Euler(-_yRot, rotation.value.y * 360, 0.0f);
         }
 
         public void SetEntityFollow(Entity entity)

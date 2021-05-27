@@ -1,5 +1,4 @@
-﻿
-using ECSFPS.ECS.Components;
+﻿using ECSFPS.ECS.Components;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Jobs;
@@ -8,26 +7,21 @@ using Unity.Physics;
 using Unity.Transforms;
 
 
-[BurstCompile]
-public class PlayerMoveSystem : JobComponentSystem
+namespace Assets.Scripts.ECS.Systems
 {
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    [BurstCompile]
+    public class PlayerMoveSystem : JobComponentSystem
     {
-        return Entities.ForEach((ref PhysicsVelocity velocity, ref PhysicsMass mass, ref LocalToWorld transform, ref Rotation rotation, ref InputComponent input, ref PlayerDataComponent player) =>
+        protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            if (math.all(input.MovementValue == float3.zero))
+            return Entities.ForEach((ref PlayerDataComponent player, ref LocalToWorld transform, ref PhysicsVelocity velocity, ref InputComponent input, ref Rotation rot) =>
             {
-                mass.InverseInertia = float3.zero;
-            }
-            else
-            {
-                float3 forwardVector = math.mul(rotation.Value, input.MovementValue) * input.deltaTime * player.Speed;
-                /*float3 direction =
-                    (input.MovementValue.z * transform.Forward + input.MovementValue.x * transform.Right) *
-                    input.deltaTime * player.Speed;*/
-
-                velocity.Linear = new float3(forwardVector.x, velocity.Linear.y, forwardVector.z);
-            }
-        }).Schedule(inputDeps);
+                float3 dir = (transform.Forward * input.MovementValue.z + transform.Right * input.MovementValue.x) * player.Speed;
+                velocity.Linear += new float3(dir.x, 0.0f, dir.z);
+                velocity.Angular = new float3(0.0f, input.XMousePosition * 1000 * input.deltaTime, 0.0f);
+                if (rot.Value.value.y >= 0.98) rot.Value.value.y = -1;
+                if (rot.Value.value.y <= -0.98) rot.Value.value.y = 1;
+            }).Schedule(inputDeps);
+        }
     }
 }

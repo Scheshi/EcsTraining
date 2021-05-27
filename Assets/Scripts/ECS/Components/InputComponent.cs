@@ -1,6 +1,7 @@
 using Unity.Entities;
 using Unity.Mathematics;
 
+
 namespace ECSFPS.ECS.Components
 {
     [GenerateAuthoringComponent]
