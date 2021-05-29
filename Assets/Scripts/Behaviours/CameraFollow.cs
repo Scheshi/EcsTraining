@@ -23,10 +23,10 @@ namespace Assets.Scripts.Behaviours
 
         private void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            /*Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             _xRot = transform.rotation.x;
-            _yRot = transform.rotation.y;
+            _yRot = transform.rotation.y;*/
             
         }
 
@@ -38,12 +38,14 @@ namespace Assets.Scripts.Behaviours
 
         private void LateUpdate()
         {
-            var followEntityTranslation = _manager.GetComponentData<Translation>(_entity);
-            if (followEntityTranslation.Equals(default)) return;
-            var rotation = _manager.GetComponentData<Rotation>(_entity).Value;
-            transform.position = followEntityTranslation.Value + _offset;
-            transform.LookAt(followEntityTranslation.Value);
-            //transform.rotation = Quaternion.Euler(-_yRot, rotation.value.y * 360, 0.0f);
+            if (_entity != Entity.Null)
+            {
+                var followEntityTranslation = _manager.GetComponentData<Translation>(_entity);
+                if (followEntityTranslation.Equals(default)) return;
+                var rotation = _manager.GetComponentData<Rotation>(_entity).Value;
+                transform.position = followEntityTranslation.Value + _offset;
+                transform.LookAt(followEntityTranslation.Value);
+            }
         }
 
         public void SetEntityFollow(Entity entity)
