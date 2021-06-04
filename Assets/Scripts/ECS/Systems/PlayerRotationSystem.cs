@@ -1,25 +1,27 @@
-﻿using ECSFPS.ECS.Components;
+﻿using Assets.Scripts.Services.Networking;
+using ECSFPS.ECS.Components;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
+using UnityEngine;
 
 
 namespace ECSFPS.ECS.Systems
 {
-    /*public class PlayerRotationSystem : ComponentSystem
+    [BurstCompile]
+    public class PlayerRotationSystem : JobComponentSystem
     {
-        protected override void OnUpdate()
+        protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            Entities.ForEach((ref InputComponent input, ref PhysicsVelocity velocity) =>
+            return Entities.ForEach((ref InputComponent input, ref PhysicsVelocity velocity, ref Rotation rotation) =>
             {
-                //var X = rotation.Value.value.y + input.YMousePosition * 5;
-                /*rotation.Value  = new quaternion(rotation.Value.value.x, input.XRot, rotation.Value.value.z, rotation.Value.value.w);
-                if (rotation.Value.value.y > 360) rotation.Value.value.y -= 360;#1#
-                velocity.Angular = new float3(0.0f, input.MovementValue.x * 90 * input.deltaTime, 0.0f);
-            });
+                velocity.Angular = new float3(0.0f, input.XMousePosition * 1000 * input.deltaTime, 0.0f);
+                if (rotation.Value.value.y >= 0.98) rotation.Value.value.y = -1;
+                if (rotation.Value.value.y <= -0.98) rotation.Value.value.y = 1;
+            }).Schedule(inputDeps);
         }
-    }*/
+    }
 }

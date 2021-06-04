@@ -18,9 +18,6 @@ namespace Assets.Scripts.ECS.Systems
             {
                 float3 dir = (transform.Forward * input.MovementValue.z + transform.Right * input.MovementValue.x) * player.Speed;
                 velocity.Linear += new float3(dir.x, 0.0f, dir.z);
-                velocity.Angular = new float3(0.0f, input.XMousePosition * 1000 * input.deltaTime, 0.0f);
-                if (rot.Value.value.y >= 0.98) rot.Value.value.y = -1;
-                if (rot.Value.value.y <= -0.98) rot.Value.value.y = 1;
             }).Schedule(inputDeps);
         }
     }
